@@ -21,7 +21,6 @@ class SignIn extends Component {
     
     
     render() {
-        console.log(this.props);
         const { authError } = this.props;
         return (
             <div className="container">

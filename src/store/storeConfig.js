@@ -2,10 +2,10 @@ import { createStore, compose, applyMiddleware } from "redux";
 import rootReducer from "./reducers/rootReducer";
 import thunk from "redux-thunk";
 import { getFirestore, reduxFirestore, createFirestoreInstance } from "redux-firestore";
-import { getFirebase, ReactReduxFirebaseProvider } from "react-redux-firebase";
+import { getFirebase, ReactReduxFirebaseProvider, isLoaded } from "react-redux-firebase";
 import firebase from 'firebase/app';
 import fbConfig from '../configs/fbConfig';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import React from 'react';
 import App from '../App'
 
@@ -22,12 +22,19 @@ const rrfProps = {
     dispatch: store.dispatch,
     createFirestoreInstance
 }
+function AuthIsLoaded({ children }) {
+    const auth = useSelector(state => state.firebase.auth)
+    if (!isLoaded(auth)) return <div>Loading Screen...</div>;
+        return children
+}
 
 const RdxStore = () => {
     return (
         <Provider store={store}>
             <ReactReduxFirebaseProvider {...rrfProps}>
-                <App /> 
+                <AuthIsLoaded>
+                    <App /> 
+                </AuthIsLoaded>                
             </ReactReduxFirebaseProvider> 
         </Provider>
     )

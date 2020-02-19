@@ -50,5 +50,10 @@ const mapDispatchToProps = (dispatchMethod) => {
     }
 }
 
+const mapStateToProps = (state) =>{
+    return {
+      auth: state.firebase.auth
+    }
+  }
 
-export default connect(null, mapDispatchToProps)(CreateProject)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateProject)
