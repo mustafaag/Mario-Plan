@@ -5,12 +5,12 @@ import { signOut } from '../../store/actions/authActions';
 
 
 const SignedInLinks = (props) => {
-    
+    console.log(props);
     return (
        <ul className="right">
            <li><NavLink to='/create'>New Project</NavLink></li>
            <li><span className="link" onClick={ props.signOut} >Log Out</span></li>
-           <li><NavLink to='/' className="btn btn-floating pink lighten-1">MM</NavLink></li>
+           <li><NavLink to='/' className="btn btn-floating pink lighten-1">{props.profile? props.profile.initials : null}</NavLink></li>
        </ul>
     )
 }
@@ -20,5 +20,6 @@ const mapDispatchToProps = (dispatch) =>{
         signOut: () =>dispatch(signOut())
     }
 }
+
 
 export default connect(null, mapDispatchToProps) (SignedInLinks);
